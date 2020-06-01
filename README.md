@@ -19,8 +19,9 @@ npm i
 npm start
 cd ..
 ```
-## Project setup
+## Run Frontend
 ```
+open new terminal
 npm install
 ```
 
