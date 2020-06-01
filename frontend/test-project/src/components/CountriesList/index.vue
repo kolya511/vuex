@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="sort-menu">
-      <span class="header-text">Sorted by population</span>
+      <span class="header-text">Sort by population</span>
       <img
         @click="sortByDescendingPeople()"
         class="sort-arrow"
@@ -53,11 +53,11 @@ export default {
     ...mapActions(["getCountriesFromServer"]),
 
     sortBypopulationGrowth() {
-      this.order = 1;
+      this.order = -1;
       this.getCountriesFromServer(this.order);
     },
     sortByDescendingPeople() {
-      this.order = -1;
+      this.order = 1;
       this.getCountriesFromServer(this.order);
     }
   },

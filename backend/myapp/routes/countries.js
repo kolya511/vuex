@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var axios = require('axios')
-//var secured = require('../lib/middleware/secured')
+var secured = require('../lib/middleware/secured')
 
-router.get('/', function (req, res) {
+router.get('/', secured(), function (req, res) {
     var { order } = req.query
 
     axios.get('https://restcountries.eu/rest/v2/all')

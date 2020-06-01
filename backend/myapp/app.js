@@ -6,45 +6,42 @@ var logger = require('morgan');
 
 var authRouter = require('./routes/auth');
 var countriesRouter = require('./routes/countries')
-var cors = require('cors')
+//var cors = require('cors')
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors())
 
-
-
-
-
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', "http://localhost:8081");
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 var session = require('express-session');
 
 // config express-session
 var sess = {
-  secret: 'CHANGE THIS TO A RANDOM SECRET',
-  cookie: {},
+  secret: 'fefeawefweffwe',
+  cookie: {secure: false, httpOnly: false},
   resave: false,
   saveUninitialized: true
 };
 
 if (app.get('env') === 'production') {
-  // Use secure cookies in production (requires SSL/TLS)
   sess.cookie.secure = true;
 }
 
 app.use(session(sess));
-
-
-
 
 // Load environment variables from .env
 var dotenv = require('dotenv');
@@ -64,9 +61,6 @@ var strategy = new Auth0Strategy(
       process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback'
   },
   function (accessToken, refreshToken, extraParams, profile, done) {
-    // accessToken is the token to call Auth0 API (not needed in the most cases)
-    // extraParams.id_token has the JSON Web Token
-    // profile has all the information from the user
     return done(null, profile);
   }
 );
@@ -75,10 +69,6 @@ passport.use(strategy);
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-
-
-
 
 
 // You can use this section to keep a smaller payload
@@ -94,13 +84,12 @@ app.use('/', authRouter);
 app.use('/countries', countriesRouter)
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 

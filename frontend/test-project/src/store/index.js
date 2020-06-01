@@ -8,7 +8,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         countries: [],
-        searchedcountries: []
+        searchedcountries: [],
+        userStatus: false
     },
 
     mutations: {
@@ -16,14 +17,18 @@ export default new Vuex.Store({
             state.countries = countriesArr
         },
 
-        saveSearchedCountries(state, countriesArr){
+        saveSearchedCountries(state, countriesArr) {
             state.searchedcountries = countriesArr
+        },
+
+        saveUserStatus(state, userStatus){
+            state.userStatus = userStatus
         }
     },
 
     actions: {
         getCountriesFromServer({ commit }, order) {
-            axios.get(`http://localhost:3000/countries?order=${order}`)
+            axios.get(`http://localhost:3000/countries?order=${order}`, {withCredentials: true})
                 .then(res => res.data)
                 .then(resData => {
                     if (resData) {
@@ -42,13 +47,26 @@ export default new Vuex.Store({
                     }
                     else throw new Error("Fatch faild")
                 })
+        },
+
+        checkUserLogin({ commit }) {
+            axios.get("http://localhost:3000/auth", {withCredentials: true})
+                .then(res => res.data)
+                .then(resData => {
+                    if (resData) {
+                        commit("saveUserStatus", resData.isLoggedIn)
+                    }
+                    else throw new Error("Fatch faild")
+                })
         }
     },
 
     getters: {
         getCountriesFromList: state => state.countries,
 
-        getSearchedCountriesFromList: state => state.searchedcountries
+        getSearchedCountriesFromList: state => state.searchedcountries,
+
+        getUserStatus: state => state.userStatus
     }
 
 })

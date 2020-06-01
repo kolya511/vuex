@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="text-block">
-     <p>Search country</p>
+      <p>Search country</p>
     </div>
     <div class="search-block">
       <b-field position="is-centered">
@@ -15,13 +15,13 @@
     <div class="result">
       <div v-if="sowResult">
         <div v-for="(country, i) in getSearchedCountriesFromList" :key="i">
-            <div>
-              <img :src="country.flag" alt="falg" class="flag-img" />
-            </div>
-            <div>Name: {{ country.name }}</div>
-            <div>Capital: {{ country.capital }}</div>
-            <div>Population: {{ country.population }}</div>
+          <div>
+            <img :src="country.flag" alt="falg" class="flag-img" />
           </div>
+          <div>Name: {{ country.name }}</div>
+          <div>Capital: {{ country.capital }}</div>
+          <div>Population: {{ country.population }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -85,7 +85,7 @@ export default {
   justify-content: center;
   margin-top: 150px;
 }
-.text-block p{
+.text-block p {
   font-size: 24px;
 }
 </style>
