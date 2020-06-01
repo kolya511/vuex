@@ -19,9 +19,9 @@ npm i
 npm start
 ```
 ## Run Frontend
-```
-open new terminal
-```
+
+Open new terminal
+
 Then run commands
 ```
 npm install
