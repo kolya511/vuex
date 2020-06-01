@@ -69,7 +69,7 @@ export default {
 </script>
 
 <style scoped>
-.sort-menu{
+.sort-menu {
   display: flex;
   align-items: center;
   margin-bottom: 30px;

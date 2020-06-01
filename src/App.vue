@@ -14,11 +14,6 @@ export default {
   components: {
     NavBar,
   },
-    data() {
-      return {
-        clientid: process.env.VUE_APP_AUTH0_CONFIG_CLIENTID
-      }
-    },
 };
 </script>
 
