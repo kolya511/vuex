@@ -17,11 +17,13 @@ Then run commands
 ```
 npm i
 npm start
-cd ..
 ```
 ## Run Frontend
 ```
 open new terminal
+```
+Then run commands
+```
 npm install
 ```
 
